@@ -4,7 +4,7 @@ const validUrl = require('valid-url');
 const { saveMapping, getMapping, getAllMappings } = require('../models/urlModel');
 
 // Access the environment variables
-const baseUrl = process.env.BASE_URL || 'http://localhost:3000';  // Default to localhost if not set
+const baseUrl = process.env.BASE_URL || 'http://localhost:10000';  // Default to localhost if not set
 
 console.log(process.env.BASE_URL);  // Check if it prints the correct base URL
 

@@ -20,7 +20,7 @@ app.get('/:shortcode', redirectToOriginalUrl) // Redirect to original URL via sh
 console.log(process.env.BASE_URL);  // Check if it prints the correct base URL
 
 // Start the server
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 10000
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })
