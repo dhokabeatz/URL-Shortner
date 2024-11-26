@@ -1,4 +1,4 @@
-```markdown
+
 # URL Shortener
 
 A simple and efficient URL Shortener built with Node.js and Express.js. This application allows users to generate shortened URLs for easy sharing and redirection to the original long URLs.
@@ -78,7 +78,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Author
 Created by [Henry Agyemang](https:www.linkedin.com/in/dhokabeatz). Follow me on [Twitter](https://twitter.com/dhokabeatz) for updates and more projects.
 
----
+
 
 Feel free to reach out if you encounter any issues or have suggestions for improvement especially in the frontend😂!
-```
+
