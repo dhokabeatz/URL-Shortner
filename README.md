@@ -11,7 +11,7 @@ A simple and efficient URL Shortener built with Node.js and Express.js. This app
 ## Live Demo
 Access the live app here: [URL-Shortner-Service](https://url-shortner-service-wnwl.onrender.com)
 
-![Index page](image.png)
+![Index page](./image.png)
 
 ## Technologies Used
 - **Backend:** Node.js, Express.js
