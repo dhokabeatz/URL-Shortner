@@ -22,7 +22,7 @@ function generateShortcode() {
 // Controller for showing landing home
 function showHomePage(req, res) {
   const recentUrls = getAllMappings();
-  res.render('index', { title: 'URL Shortener', recentUrls, shortenedUrl: null });
+  res.render('index', { title: "🎄✨ Merry Christmas from Henry! 🎅🎁", recentUrls, shortenedUrl: null });
 }
 
 // Controller for shortening the URL
