@@ -7,101 +7,142 @@
     <title>
         <%= title %>
     </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100vh;
-            flex-direction: column;
+            font-family: 'Inter', sans-serif;
         }
 
-        button {
-            background-color: #1DA1F2;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: pointer;
+        .copy-btn {
+            transition: all 0.2s ease;
         }
 
-        button:hover {
-            background-color: #007bb5;
+        .copy-btn:hover {
+            transform: scale(1.05);
         }
 
-        footer {
-            margin-top: 20px;
-            text-align: center;
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
         }
     </style>
 </head>
 
-<body>
-    <h1><%= title %></h1>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div class="max-w-3xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
+                <%= title %>
+            </h1>
 
-    <form action="/shorten" method="POST">
-        <label for="longURL">Enter a URL to shorten:</label>
-        <input type="text" id="longURL" name="longURL" required />
-        <button type="submit">Shorten</button>
-    </form>
+            <form action="/shorten" method="POST" class="space-y-4 mb-8">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <label for="longURL" class="block text-sm font-medium text-gray-700 mb-2">Enter a URL to
+                            shorten:</label>
+                        <input type="text" id="longURL" name="longURL" required
+                            class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 transition-colors"
+                            placeholder="https://example.com/very-long-url" />
+                    </div>
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 self-end">
+                        Shorten URL
+                    </button>
+                </div>
+            </form>
 
-    <% if (shortenedUrl) { %>
-        <h3>Your shortened URL is:</h3>
-        <p>
-            <a href="<%= shortenedUrl %>" target="_blank" id="shortenedUrlLink">
-                <%= shortenedUrl %>
-            </a>
-            <button onclick="copyToClipboard()" style="margin-left: 10px;">
-                📋 Copy
-            </button>
-        </p>
-    <% } %>
+            <% if (shortenedUrl) { %>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Your shortened URL is ready!</h3>
+                    <div class="flex items-center gap-3">
+                        <a href="<%= shortenedUrl %>" target="_blank" id="shortenedUrlLink"
+                            class="text-blue-600 hover:text-blue-800 break-all">
+                            <%= shortenedUrl %>
+                        </a>
+                        <button onclick="copyToClipboard()"
+                            class="copy-btn flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            Copy
+                        </button>
+                    </div>
+                </div>
+                <% } %>
 
-    <h2>Recently Shortened URLs</h2>
-    <ul>
-        <% recentUrls.forEach(([shortcode, longURL]) => { %>
-            <li><a href="/<%= shortcode %>" target="_blank">
-                    <%= longURL %>
-                </a></li>
-        <% }) %>
-    </ul>
+                    <div class="border-t border-gray-200 pt-8">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Recently Shortened URLs</h2>
+                        <div class="space-y-3">
+                            <% recentUrls.forEach(([shortcode, longURL])=> { %>
+                                <div
+                                    class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                    <div class="flex-1 truncate">
+                                        <a href="/<%= shortcode %>" target="_blank"
+                                            class="text-blue-600 hover:text-blue-800">
+                                            <%= longURL %>
+                                        </a>
+                                    </div>
+                                    <span class="text-sm text-gray-500">/<%= shortcode %></span>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+        </div>
 
-    <footer>
-        <p>
-            Follow me on: <br>
-            Twitter
-            <a href="https://twitter.com/dhokabeatz" target="_blank" style="text-decoration: none; color: #1DA1F2;">
-                 @dhokabeatz
-            </a><br>
-            LinkedIn
-            <a href="https://linkedin.com/in/dhokabeatz" target="_blank" style="text-decoration: none; color: #1DA1F2;">
-                @dhokabeatz
-           </a><br>
-        </p>
-    </footer>
+        <footer class="text-center text-gray-600">
+            <p class="mb-4">Follow me on:</p>
+            <div class="flex justify-center gap-6">
+                <a href="https://twitter.com/dhokabeatz" target="_blank"
+                    class="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22 4.01C21 4.5 20.02 4.84 19 5C20.02 4.3 20.82 3.26 21.22 2.01C20.24 2.63 19.15 3.07 18 3.31C17.07 2.28 15.76 1.65 14.31 1.65C11.52 1.65 9.26 3.91 9.26 6.7C9.26 7.12 9.3 7.53 9.38 7.92C5.18 7.73 1.44 5.71 -0.06 2.76C-0.52 3.55 -0.78 4.47 -0.78 5.45C-0.78 7.29 0.16 8.93 1.61 9.89C0.76 9.87 -0.06 9.63 -0.78 9.23V9.28C-0.78 11.75 0.97 13.85 3.26 14.34C2.82 14.46 2.35 14.52 1.86 14.52C1.51 14.52 1.17 14.49 0.84 14.43C1.52 16.49 3.43 18.01 5.71 18.05C3.93 19.47 1.71 20.3 -0.68 20.3C-1.12 20.3 -1.55 20.28 -1.98 20.23C0.33 21.74 3.07 22.6 5.99 22.6C14.31 22.6 18.86 15.61 18.86 9.58C18.86 9.37 18.86 9.16 18.85 8.95C19.84 8.16 20.71 7.19 21.42 6.09L22 4.01Z"
+                            fill="currentColor" />
+                    </svg>
+                    @dhokabeatz
+                </a>
+                <a href="https://linkedin.com/in/dhokabeatz" target="_blank"
+                    class="flex items-center gap-2 text-gray-600 hover:text-blue-700 transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.47 2H3.53C2.69 2 2 2.69 2 3.53V20.47C2 21.31 2.69 22 3.53 22H20.47C21.31 22 22 21.31 22 20.47V3.53C22 2.69 21.31 2 20.47 2ZM8.09 18.74H5.07V9.42H8.09V18.74ZM6.58 8.14C5.61 8.14 4.82 7.35 4.82 6.38C4.82 5.41 5.61 4.62 6.58 4.62C7.55 4.62 8.34 5.41 8.34 6.38C8.34 7.35 7.55 8.14 6.58 8.14ZM18.91 18.74H15.89V14.47C15.89 13.31 15.87 11.81 14.27 11.81C12.65 11.81 12.4 13.09 12.4 14.41V18.74H9.38V9.42H12.27V10.71H12.31C12.75 9.95 13.77 9.15 15.27 9.15C18.33 9.15 18.91 11.21 18.91 13.85V18.74Z"
+                            fill="currentColor" />
+                    </svg>
+                    @dhokabeatz
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="toast"
+        class="fixed bottom-4 right-4 transform translate-y-full opacity-0 transition-all duration-300 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg">
+    </div>
 
     <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.remove('translate-y-full', 'opacity-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-full', 'opacity-0');
+            }, 3000);
+        }
+
         function copyToClipboard() {
-            // Get the shortened URL link
-            const shortenedUrlLink = document.getElementById('shortenedUrlLink').textContent;
-
-            // Create a temporary input element to copy the URL
-            const tempInput = document.createElement('input');
-            tempInput.value = shortenedUrlLink;
-            document.body.appendChild(tempInput);
-
-            // Select the text and copy it to clipboard
-            tempInput.select();
-            document.execCommand('copy');
-
-            // Remove the temporary input
-            document.body.removeChild(tempInput);
-
-            // Show confirmation (optional)
-            alert('Shortened URL copied to clipboard!');
+            const shortenedUrlLink = document.getElementById('shortenedUrlLink').textContent.trim();
+            navigator.clipboard.writeText(shortenedUrlLink)
+                .then(() => {
+                    showToast('URL copied to clipboard!');
+                })
+                .catch(() => {
+                    showToast('Failed to copy URL');
+                });
         }
     </script>
 </body>
 
-</html>
+</html
